@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CCP1 — Cours Web</title>
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* Ajouts pédagogiques */
+    .toc { margin:1rem 0; padding:1rem; background:#eef6ff; border-left:4px solid var(--accent); border-radius:8px; }
+    .toc h2 { margin-bottom:.5rem; font-size:1rem; }
+    .toc ul{ list-style:disc; margin-left:1.2rem; }
+    .note, .exercice{
+      border-radius:8px; padding:1rem; margin:1rem 0;
+    }
+    .note{ background:#f0fdf4; border-left:4px solid var(--success); }
+    .exercice{ background:#fff7ed; border-left:4px solid var(--danger); }
+    pre{
+      background:#0f172a; color:#29b306; padding:1rem; border-radius:8px; overflow-x:auto;
+    }
+    code{  padding:.2rem .4rem; border-radius:4px; font-size:.9rem; }
+    details{ margin:1rem 0; }
+    details summary{ cursor:pointer; font-weight:600; color:var(--accent); }
+    .quiz{ margin-top:1rem; }
+    .quiz button{ margin:.2rem 0; display:block; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a class="brand" href="index.html"><strong>CCP1</strong><span>- Cours Web</span></a>
+      <nav class="nav" role="navigation" aria-label="Navigation principale">
+        <ul>
+          <li><a href="module1-html.html">HTML</a></li>
+          <li><a href="module2-css.html">CSS</a></li>
+          <li><a href="module3-sem.html">Sémantique</a></li>
+          <li><a href="module4-resp.html">Responsive</a></li>
+          <li><a href="module5-js.html">JavaScript</a></li>
+          <li><a href="module6-projet.html">Projet</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+
+
+<!-- Invitation à cloner le projet -->
+<div class="note">
+  <h2> Essayez par vous-même</h2>
+  <p>
+    Vous pouvez cloner le projet complet et explorer le code source pour vous entraîner :
+  </p>
+  <ul>
+    <li>Ouvrez un terminal ou invite de commande.</li>
+    <li>Exécutez la commande suivante pour cloner le projet depuis GitHub :</li>
+  </ul>
+  <pre><code>git clone https://github.com/votre-utilisateur/ccp1-web.git</code></pre>
+  <p>
+    Ensuite, ouvrez le dossier du projet dans votre éditeur de code préféré 
+    (VS Code, Sublime Text, etc.) et explorez les fichiers HTML, CSS et JS.  
+    Vous pourrez modifier les annonces, ajouter des fonctionnalités et tester vos idées.
+  </p>
+  <p>
+    Astuce : chaque module possède son propre fichier HTML pour que vous puissiez tester chaque concept indépendamment.
+  </p>
+</div>
+
+
+    <section class="card">
+      <h1>Bienvenue — Cours CCP1</h1>
+      <p>
+        Objectif : maîtriser les bases HTML, CSS, la sémantique et l’accessibilité, 
+        le responsive design, le JavaScript (DOM & JSON) et réaliser un projet final complet.
+      </p>
+
+      <!-- Table des matières -->
+      <div class="toc">
+        <h2>Plan des modules</h2>
+        <ul>
+          <li><strong>Module 1</strong> : HTML et structure</li>
+          <li><strong>Module 2</strong> : CSS, Flexbox et Grid</li>
+          <li><strong>Module 3</strong> : Sémantique et accessibilité</li>
+          <li><strong>Module 4</strong> : Responsive design (media queries)</li>
+          <li><strong>Module 5</strong> : JavaScript (DOM, JSON, boucles)</li>
+          <li><strong>Module 6</strong> : Projet final — site d’annonces avec localStorage</li>
+        </ul>
+      </div>
+
+      <h2>Exemple de structure HTML de base</h2>
+      <p>
+        Un document HTML commence toujours par la déclaration <code>&lt;!DOCTYPE html&gt;</code>, 
+        suivie des balises <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code> et <code>&lt;body&gt;</code>.
+      </p>
+
+      <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="fr"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;title&gt;Mon premier document&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Bonjour le web&lt;/h1&gt;
+    &lt;p&gt;Ceci est un paragraphe.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+      <div class="note">
+        À retenir :  
+        - <code>&lt;h1&gt;</code> est le titre principal de la page.  
+        - <code>&lt;p&gt;</code> définit un paragraphe.  
+        - Toujours préciser <code>lang="fr"</code> pour l’accessibilité et le référencement.
+      </div>
+
+      <!-- Exercices -->
+      <div class="exercice">
+        <strong>Exercice 1 — Page CV</strong><br>
+        Créez une page contenant :  
+        - votre nom en <code>&lt;h1&gt;</code>,  
+        - une section <code>&lt;h2&gt;Expérience&lt;/h2&gt;</code> avec au moins deux paragraphes,  
+        - une section <code>&lt;h2&gt;Contact&lt;/h2&gt;</code> avec un email cliquable (<code>&lt;a href="mailto:..."&gt;</code>).
+      </div>
+
+      <div class="exercice">
+        <strong>Exercice 2 — Page Recette</strong><br>
+        Créez une page qui affiche une recette de cuisine :  
+        - un titre (<code>&lt;h1&gt;</code>),  
+        - une liste d’ingrédients (<code>&lt;ul&gt;</code>),  
+        - une liste numérotée des étapes (<code>&lt;ol&gt;</code>),  
+        - une image du plat (<code>&lt;img&gt;</code>).
+      </div>
+
+      <div class="exercice">
+        <strong>Exercice 3 — Mini-site</strong><br>
+        Créez deux pages reliées :  
+        - Page 1 : Accueil avec un titre et un lien vers la page 2.  
+        - Page 2 : À propos avec un texte de présentation et un lien retour vers la page d’accueil.  
+        Astuce : utilisez <code>&lt;a href="page2.html"&gt;</code> pour relier les fichiers.
+      </div>
+
+      <!-- Indice -->
+      <details>
+        <summary>Indice pour les exercices</summary>
+        Utilisez la balise <code>&lt;a href="..."&gt;</code> pour insérer un lien, 
+        et <code>&lt;img src="..." alt="..."&gt;</code> pour afficher une image.
+      </details>
+
+      <!-- Quiz -->
+      <div class="quiz">
+        <p><strong>Quiz :</strong> Quelle balise est utilisée pour créer une liste numérotée ?</p>
+        <button onclick="alert('Bonne réponse : <ol>')">a) &lt;ol&gt;</button>
+        <button onclick="alert('Incorrect. <ul> est une liste non ordonnée.')">b) &lt;ul&gt;</button>
+        <button onclick="alert('Incorrect. <li> est un élément de liste.')">c) &lt;li&gt;</button>
+      </div>
+
+      <!-- Défi -->
+      <div class="note">
+        Défi bonus :  
+        Créez un mini-site de trois pages reliées par un menu de navigation (Accueil, Recettes, Contact).  
+        - Ajoutez un en-tête commun avec <code>&lt;nav&gt;</code>.  
+        - Placez un pied de page (<code>&lt;footer&gt;</code>).  
+        - Utilisez <code>&lt;main&gt;</code> pour le contenu principal.
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    &copy; 2025 — Cours CCP1 — Préparez votre projet final
+  </footer>
+</body>
+</html>

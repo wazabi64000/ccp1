@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "titre": "Vélo électrique",
+    "prix": 1200,
+    "categorie": "Sport",
+    "image": "https://via.placeholder.com/640x360",
+    "date": "2025-09-08"
+  },
+  {
+    "id": 2,
+    "titre": "PC portable",
+    "prix": 950,
+    "categorie": "Informatique",
+    "image": "https://via.placeholder.com/640x360",
+    "date": "2025-09-05"
+  },
+  {
+    "id": 3,
+    "titre": "Smartphone",
+    "prix": 500,
+    "categorie": "Electronique",
+    "image": "https://via.placeholder.com/640x360",
+    "date": "2025-09-01"
+  }
+]

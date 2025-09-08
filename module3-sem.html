@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Module 3 — Sémantique & Accessibilité</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Styles pédagogiques */
+    .note, .exercice, .quiz { border-radius:8px; padding:1rem; margin:1rem 0; }
+    .note { background:#f0fdf4; border-left:4px solid var(--success); }
+    .exercice { background:#fff7ed; border-left:4px solid var(--danger); }
+    .quiz button { margin:.2rem 0; display:block; }
+    pre { background:#0f172a; color:#f8fafc; padding:1rem; border-radius:8px; overflow-x:auto; }
+    code { background:#f1f5f9; padding:.2rem .4rem; border-radius:4px; font-size:.9rem; }
+    details { margin:1rem 0; }
+    details summary { cursor:pointer; font-weight:600; color:var(--accent); }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#content">Aller au contenu</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html"><strong>CCP1</strong><span>- Module 3</span></a>
+      <nav class="nav" aria-label="Navigation module 3">
+        <ul>
+          <li><a href="module2-css.html">← CSS</a></li>
+          <li><a href="module4-resp.html">Suivant → Responsive</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="content" class="container">
+    <article class="card">
+      <h1>Module 3 : Sémantique & Accessibilité</h1>
+
+      <!-- 1. Pourquoi la sémantique -->
+      <h2>1. Pourquoi la sémantique ?</h2>
+      <p>Les balises sémantiques donnent du sens au contenu pour les navigateurs, moteurs de recherche et technologies d’assistance (lecteurs d’écran). Une bonne sémantique améliore :</p>
+      <ul>
+        <li>Le référencement naturel (SEO)</li>
+        <li>L’accessibilité</li>
+        <li>La lisibilité et la maintenance du code</li>
+      </ul>
+      <div class="note">
+        À retenir : Toujours choisir la balise qui reflète le mieux le rôle du contenu.
+      </div>
+
+      <!-- 2. Balises-clés -->
+      <h2>2. Balises-clés</h2>
+      <ul>
+        <li><code>&lt;header&gt;</code> : en-tête de la page ou d’un article</li>
+        <li><code>&lt;nav&gt;</code> : navigation principale ou secondaire</li>
+        <li><code>&lt;main&gt;</code> : contenu principal unique de la page</li>
+        <li><code>&lt;article&gt;</code> : contenu indépendant et autonome</li>
+        <li><code>&lt;section&gt;</code> : sections logiques de contenu</li>
+        <li><code>&lt;aside&gt;</code> : contenu secondaire lié mais non indispensable</li>
+        <li><code>&lt;footer&gt;</code> : pied de page ou informations finales</li>
+      </ul>
+      <div class="note">
+        À retenir : La sémantique guide les utilisateurs et machines dans la compréhension de la page.
+      </div>
+
+      <!-- 3. Accessibilité pratique -->
+      <h2>3. Accessibilité pratique</h2>
+      <ul>
+        <li>Images : toujours fournir un <code>alt</code> descriptif</li>
+        <li>Formulaires : labels clairs et associés aux champs</li>
+        <li>Contraste suffisant pour le texte et les boutons</li>
+        <li>Navigation clavier fluide (ordre logique du DOM)</li>
+        <li>ARIA : uniquement si nécessaire pour les composants complexes</li>
+      </ul>
+      <div class="note">
+        À retenir : L’accessibilité bénéficie à tous, pas seulement aux personnes en situation de handicap.
+      </div>
+
+      <!-- 4. Exemple structuré -->
+      <h2>4. Exemple structuré</h2>
+      <article aria-labelledby="a-title">
+        <h2 id="a-title">Article exemple (accessible)</h2>
+        <p>Paragraphe introductif pour illustrer la sémantique.</p>
+        <figure>
+          <img src="https://via.placeholder.com/640x320" alt="Photo explicative montrant un exemple">
+          <figcaption>Figure : description courte de l'image</figcaption>
+        </figure>
+        <aside>
+          <h3>Informations complémentaires</h3>
+          <p>Le contenu de l’aside fournit des informations utiles mais non essentielles.</p>
+        </aside>
+      </article>
+
+      <!-- 5. Exercices -->
+      <h2>5. Exercices pratiques</h2>
+      <div class="exercice">
+        <strong>Exercice 1 — Balises sémantiques</strong><br>
+        Créez une page avec : <code>header, nav, main, article, aside, footer</code>. Vérifiez que chaque section a un titre clair (<code>h1-h3</code>).
+      </div>
+      <div class="exercice">
+        <strong>Exercice 2 — Accessibilité</strong><br>
+        Ajoutez au moins une image avec un attribut <code>alt</code> descriptif et un formulaire avec labels explicites.
+      </div>
+      <div class="exercice">
+        <strong>Exercice 3 — Vérification</strong><br>
+        Testez votre page au clavier uniquement. Vérifiez l’ordre de navigation et la lisibilité.
+      </div>
+
+      <!-- 6. Checklist rapide -->
+      <h2>6. Checklist rapide pour l’accessibilité</h2>
+      <ul>
+        <li>Contraste texte/fond correct</li>
+        <li>Labels explicites pour tous les champs</li>
+        <li>Navigation clavier possible</li>
+        <li>Éviter l’usage abusif d’ARIA</li>
+      </ul>
+
+      <!-- 7. Quiz rapide -->
+      <h2>7. Quiz</h2>
+      <div class="quiz">
+        <p>Quelle balise contient le contenu principal unique d’une page ?</p>
+        <button onclick="alert('Bonne réponse : <main>')">a) &lt;main&gt;</button>
+        <button onclick="alert('Incorrect. <article> peut être répété plusieurs fois.')">b) &lt;article&gt;</button>
+        <button onclick="alert('Incorrect. <section> organise le contenu mais n’est pas unique.')">c) &lt;section&gt;</button>
+      </div>
+      <div class="note">
+        Défi bonus : Refaites la page précédente en utilisant uniquement des balises sémantiques et vérifiez l’accessibilité avec un lecteur d’écran.
+      </div>
+
+    </article>
+  </main>
+
+  <footer class="site-footer"><a href="index.html">Retour à l'accueil</a></footer>
+</body>
+</html>

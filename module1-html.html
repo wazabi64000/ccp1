@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Module 1 — HTML & Structure</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Styles pédagogiques */
+    .note, .exercice, .quiz { border-radius:8px; padding:1rem; margin:1rem 0; }
+    .note { background:#f0fdf4; border-left:4px solid var(--success); }
+    .exercice { background:#fff7ed; border-left:4px solid var(--danger); }
+    .quiz button { margin:.2rem 0; display:block; }
+    pre { background:#0f172a; color:#1eaa0b; padding:1rem; border-radius:8px; overflow-x:auto; }
+    code {  padding:.2rem .4rem; border-radius:4px; font-size:.9rem; }
+    details { margin:1rem 0; }
+    details summary { cursor:pointer; font-weight:600; color:var(--accent); }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#content">Aller au contenu</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html"><strong>CCP1</strong><span>- Module 1</span></a>
+      <nav class="nav" aria-label="Navigation module 1">
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="module2-css.html">Suivant → CSS</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="content" class="container">
+    <article class="card">
+      <h1>Module 1 : HTML & Structure</h1>
+
+      <h2>1. Le rôle du HTML</h2>
+      <p>HTML (HyperText Markup Language) définit la <strong>structure</strong> et la <strong>sémantique</strong> du contenu d'une page web. Les navigateurs lisent ces balises pour afficher le contenu, et les outils d’accessibilité s’en servent pour aider les utilisateurs.</p>
+      <div class="note">
+        À retenir : HTML n’est pas du design, mais la structure et le sens du contenu.
+      </div>
+
+      <h2>2. Doctype et structure minimale</h2>
+      <p>Un document HTML commence par :</p>
+      <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="fr"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Titre de la page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;!-- Contenu ici --&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+      <p><em>Explication :</em> Le <code>&lt;!DOCTYPE html&gt;</code> indique au navigateur de rendre la page en mode standard HTML5. L'attribut <code>lang="fr"</code> est important pour le SEO et l’accessibilité.</p>
+
+      <h2>3. Structure sémantique basique</h2>
+      <pre><code>&lt;header&gt;
+  &lt;h1&gt;Titre du site&lt;/h1&gt;
+&lt;/header&gt;
+
+&lt;nav&gt;&lt;!-- menu --&gt;&lt;/nav&gt;
+
+&lt;main&gt;
+  &lt;article&gt;
+    &lt;h2&gt;Titre d'article&lt;/h2&gt;
+    &lt;p&gt;Contenu...&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;aside&gt;Informations complémentaires&lt;/aside&gt;
+&lt;/main&gt;
+
+&lt;footer&gt;Pied de page&lt;/footer&gt;
+</code></pre>
+      <div class="note">
+        Utilisez <code>header, nav, main, article, aside, footer</code> plutôt que des <code>div</code> génériques.
+      </div>
+
+      <h2>4. Bonnes pratiques</h2>
+      <ul>
+        <li>Balises sémantiques pour la lisibilité et l’accessibilité.</li>
+        <li>Attributs <code>alt</code> pour les images.</li>
+        <li>Ordre logique du DOM pour la navigation au clavier.</li>
+        <li>Meta viewport et charset pour l’affichage correct sur mobile.</li>
+      </ul>
+
+      <h2>5. Exercices</h2>
+      <div class="exercice">
+        <strong>Exercice 1 — Structure minimale</strong><br>
+        Crée un fichier <code>test.html</code> avec la structure HTML minimale, puis ajoute un <code>article</code> et un <code>aside</code>.
+      </div>
+
+      <div class="exercice">
+        <strong>Exercice 2 — Page de présentation</strong><br>
+        Crée une page avec :  
+        - un titre principal (<code>&lt;h1&gt;</code>),  
+        - deux sections (<code>&lt;section&gt;</code>) avec titres secondaires (<code>&lt;h2&gt;</code>) et paragraphes,  
+        - un menu de navigation (<code>&lt;nav&gt;</code>) avec au moins deux liens.
+      </div>
+
+      <div class="exercice">
+        <strong>Exercice 3 — Mini-site 2 pages</strong><br>
+        - Page 1 : Accueil avec titre et lien vers Page 2.  
+        - Page 2 : À propos avec texte et lien retour.  
+        Astuce : utilisez <code>&lt;a href="page2.html"&gt;</code> pour relier les pages.
+      </div>
+
+      <details>
+        <summary>Indice pour les exercices</summary>
+        Pour les liens utilisez <code>&lt;a href="..."&gt;</code>, pour les images <code>&lt;img src="..." alt="..."&gt;</code>.
+      </details>
+
+      <h2>6. Quiz rapide</h2>
+      <div class="quiz">
+        <p>Quelle balise définit le contenu principal d’une page ?</p>
+        <button onclick="alert('Bonne réponse : <main>')">a) &lt;main&gt;</button>
+        <button onclick="alert('Incorrect. <div> est générique.')">b) &lt;div&gt;</button>
+        <button onclick="alert('Incorrect. <section> structure des sections.')">c) &lt;section&gt;</button>
+      </div>
+
+      <div class="note">
+        Défi bonus : Créez un mini-site de 3 pages reliées par un menu de navigation, avec <code>header</code>, <code>nav</code>, <code>main</code> et <code>footer</code>.
+      </div>
+
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <a href="index.html">Retour à l'accueil</a>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Module 5 — JavaScript avancé avec JSON externe</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .carte { 
+      border:1px solid #e6eef6; 
+      border-radius:8px; 
+      padding:.5rem; 
+      margin:.5rem 0; 
+      display:flex; 
+      flex-direction:column; 
+      gap:.3rem; 
+    }
+    .carte img { width:100%; height:auto; border-radius:6px; }
+    button { padding:.5rem 1rem; border-radius:6px; border:none; cursor:pointer; background:#3b82f6; color:white; }
+    button:hover { background:#2563eb; }
+    .note { background:#f0fdf4; border-left:4px solid #22c55e; padding:1rem; margin:1rem 0; border-radius:6px; }
+    pre { background:#0f172a; color:#27b40b; padding:1rem; border-radius:6px; overflow-x:auto; }
+    code { font-size:.9rem; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html"><strong>CCP1</strong><span>- Module 5</span></a>
+      <nav class="nav" aria-label="Navigation module 5">
+        <ul>
+          <li><a href="module4-resp.html">← Responsive</a></li>
+          <li><a href="module6-projet.html">Suivant → Projet</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <article class="card">
+      <h1>Module 5 : JavaScript — JSON externe, DOM, forEach et LocalStorage</h1>
+
+      <!-- 1. Concepts -->
+      <h2>1. Concepts importants</h2>
+      <ul>
+        <li><strong>DOM</strong> : interface représentant la page. Chaque élément HTML devient un nœud manipulable par JavaScript.</li>
+        <li><strong>JSON</strong> : format de données pour représenter des objets ou tableaux (ex. annonces).</li>
+        <li><strong>forEach</strong> : méthode pour parcourir un tableau et exécuter une fonction sur chaque élément.</li>
+        <li><strong>LocalStorage</strong> : stockage persistant dans le navigateur pour conserver les favoris ou autres données.</li>
+        <li><strong>ES6</strong> : let/const, arrow functions, template literals, import/export pour modules.</li>
+      </ul>
+      <div class="note">
+        Astuce : Utiliser ES6 simplifie le code et le rend plus lisible.
+      </div>
+
+      <!-- 2. Créer un fichier JSON externe -->
+      <h2>2. JSON externe</h2>
+      <p>Pour un projet réel, on sépare les données du code JavaScript :</p>
+      <pre><code>// Créer un fichier "js/annonces.json" avec le contenu suivant :
+[
+  {
+    "id": 1,
+    "titre": "Vélo électrique",
+    "prix": 1200,
+    "categorie": "Sport",
+    "image": "https://via.placeholder.com/640x360",
+    "date": "2025-09-08"
+  },
+  {
+    "id": 2,
+    "titre": "PC portable",
+    "prix": 950,
+    "categorie": "Informatique",
+    "image": "https://via.placeholder.com/640x360",
+    "date": "2025-09-05"
+  },
+  {
+    "id": 3,
+    "titre": "Smartphone",
+    "prix": 500,
+    "categorie": "Electronique",
+    "image": "https://via.placeholder.com/640x360",
+    "date": "2025-09-01"
+  }
+]</code></pre>
+      <div class="note">
+        Avantages : le JSON externe peut être modifié sans toucher au code JS et peut être récupéré depuis un serveur.
+      </div>
+
+      <!-- 3. Gestion des favoris -->
+      <h2>3. LocalStorage</h2>
+      <pre><code>
+// Récupérer les favoris
+let favoris = JSON.parse(localStorage.getItem('favoris')) || [];
+
+// Ajouter ou retirer un favori
+const toggleFavori = (id) => {
+  if(favoris.includes(id)){
+    favoris = favoris.filter(f => f !== id);
+  } else {
+    favoris.push(id);
+  }
+  localStorage.setItem('favoris', JSON.stringify(favoris));
+};</code></pre>
+      <div class="note">
+        Explication : LocalStorage conserve les favoris même après la fermeture du navigateur.
+      </div>
+
+      <!-- 4. Zone d'affichage -->
+      <h2>4. Zone d'affichage dynamique</h2>
+      <div id="annoncesContainer" class="annonces" aria-live="polite"></div>
+
+      <!-- 5. Exemple interactif -->
+      <h2>5. Exemple interactif</h2>
+      <p>Cliquez sur le bouton pour charger les annonces et gérer les favoris :</p>
+      <button id="loadDemo">Charger les annonces</button>
+      <div class="note">
+        Fonctionnalités :
+        <ul>
+          <li>Chargement dynamique depuis le fichier JSON externe</li>
+          <li>Création dynamique des cartes HTML</li>
+          <li>Ajout / suppression de favoris avec LocalStorage</li>
+          <li>Tri ou filtrage possible (extension future)</li>
+        </ul>
+      </div>
+
+    </article>
+  </main>
+
+  <footer class="site-footer"><a href="index.html">⬅ Retour</a></footer>
+
+  <script>
+    // --- Code source interactif ---
+    // Récupération des favoris depuis LocalStorage
+    let favoris = JSON.parse(localStorage.getItem('favoris')) || [];
+
+    // Fonction pour basculer un favori
+    const toggleFavori = (id) => {
+      if(favoris.includes(id)){
+        favoris = favoris.filter(f => f !== id);
+      } else {
+        favoris.push(id);
+      }
+      localStorage.setItem('favoris', JSON.stringify(favoris));
+      // Re-render les annonces après modification
+      renderAnnonces();
+    };
+
+    // Fonction pour afficher les annonces
+    const renderAnnonces = (annonces=[]) => {
+      const container = document.getElementById('annoncesContainer');
+      container.innerHTML = '';
+      annonces.forEach(a => {
+        const div = document.createElement('div');
+        div.className = 'carte';
+        div.innerHTML = `
+          <img src="${a.image}" alt="${a.titre}">
+          <h3>${a.titre}</h3>
+          <p>${a.prix} €</p>
+          <button onclick="toggleFavori(${a.id})">
+            ${favoris.includes(a.id) ? 'Retirer des favoris' : 'Ajouter aux favoris'}
+          </button>
+        `;
+        container.appendChild(div);
+      });
+    };
+
+    // Bouton pour charger les annonces depuis le fichier JSON
+    document.getElementById('loadDemo').addEventListener('click', () => {
+      fetch('js/annonces.json')
+        .then(res => res.json())
+        .then(data => renderAnnonces(data))
+        .catch(err => console.error('Erreur chargement JSON :', err));
+    });
+  </script>
+</body>
+</html>

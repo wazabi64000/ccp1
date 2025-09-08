@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Projet : Site d'annonces</title>
+  <style>
+    body { font-family:sans-serif; margin:0; padding:0; }
+    header, footer { background:#f0f0f0; padding:1rem; }
+    a { text-decoration:none; color:#333; }
+    .container { max-width:900px; margin:1rem auto; padding:1rem; }
+    .flex-row { display:flex; gap:1rem; flex-wrap:wrap; margin:1rem 0; }
+    .flex-item { flex:1; min-width:180px; }
+    input, select, button { padding:.5rem; border-radius:6px; border:1px solid #e6eef6; width:100%; }
+    .carte { border:1px solid #e6eef6; border-radius:8px; padding:.5rem; margin-bottom:.6rem; display:flex; flex-direction:column; }
+    .carte img { width:100%; border-radius:6px; }
+    .favori-item { display:flex; gap:.6rem; align-items:center; margin-bottom:.5rem; border-bottom:1px solid #e6eef6; padding-bottom:.3rem; }
+    .favori-item img { width:80px; height:48px; object-fit:cover; border-radius:6px; }
+    button { background:#3b82f6; color:white; cursor:pointer; border:none; }
+    button:hover { background:#2563eb; }
+    h1,h2 { margin-top:1rem; }
+    .explication { background:#f9fafb; border-left:4px solid #3b82f6; padding:1rem; margin-top:2rem; border-radius:6px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="./index.html">← Retour</a>
+</header>
+
+<main class="container">
+     <h1>Projet final : site d'annonces</h1>
+    <p>Fonctionnalités : affichage dynamique, recherche, tri, filtres, favoris avec LocalStorage.</p>
+
+  <!-- Filtres et recherche -->
+  <div class="flex-row">
+    <div class="flex-item">
+      <label for="search">Recherche</label>
+      <input id="search" placeholder="Rechercher (titre)">
+    </div>
+    <div class="flex-item">
+      <label for="filterCategorie">Catégorie</label>
+      <select id="filterCategorie">
+        <option value="all">Toutes</option>
+      </select>
+    </div>
+    <div class="flex-item">
+      <label for="sort">Trier</label>
+      <select id="sort">
+        <option value="none">Pertinence</option>
+        <option value="price-asc">Prix ↑</option>
+        <option value="price-desc">Prix ↓</option>
+        <option value="date-desc">Date récentes</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Conteneur des annonces -->
+  <div id="annoncesContainer" aria-live="polite"></div>
+
+  <!-- Section favoris -->
+  <h2>Favoris</h2>
+  <p>Vos favoris sont conservés localement dans le navigateur.</p>
+  <div id="favorisList"></div>
+
+  <!-- Section explicative -->
+  <section class="explication">
+    <h2>Explication détaillée étape par étape</h2>
+    <ol>
+      <li>
+        <strong>Données JSON :</strong> Nous créons un tableau d’objets `annonces` contenant toutes les informations pour chaque annonce : <code>id</code>, <code>titre</code>, <code>prix</code>, <code>categorie</code>, <code>image</code>, <code>date</code>.  
+        Cela simule un fichier JSON externe ou une API.
+      </li>
+      <li>
+        <strong>LocalStorage :</strong> La fonction <code>getFavoris()</code> récupère les favoris stockés dans le navigateur, et <code>toggleFavori(id)</code> ajoute ou retire un favori et met à jour le localStorage.  
+        Cela permet de conserver les favoris même après fermeture du navigateur.
+      </li>
+      <li>
+        <strong>Render Annonces :</strong> La fonction <code>renderAnnonces()</code> :
+        <ul>
+          <li>Récupère la recherche texte, la catégorie sélectionnée et le type de tri.</li>
+          <li>Filtre le tableau JSON en fonction de ces critères.</li>
+          <li>Trie les annonces si nécessaire (prix croissant/décroissant, date récente).</li>
+          <li>Génère le HTML de chaque carte dynamiquement et l’injecte dans <code>#annoncesContainer</code>.</li>
+          <li>Affiche le bouton “Ajouter/Retirer des favoris” selon si l’annonce est dans le localStorage.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Render Favoris :</strong> La fonction <code>renderFavorisUI()</code> :
+        <ul>
+          <li>Récupère les IDs des favoris dans le localStorage.</li>
+          <li>Filtre les annonces correspondant à ces IDs.</li>
+          <li>Affiche chaque favori dans <code>#favorisList</code> avec image, titre, catégorie, date et bouton “Supprimer”.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Initialisation :</strong> La fonction <code>initUI()</code> :
+        <ul>
+          <li>Génère automatiquement les options de catégories dans le select.</li>
+          <li>Appelle <code>renderAnnonces()</code> et <code>renderFavorisUI()</code> pour afficher les données au chargement.</li>
+          <li>Ajoute des listeners sur les inputs de recherche, sélection de catégorie et tri pour mettre à jour l’affichage en direct.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Événements :</strong> Les boutons “Ajouter/Retirer des favoris” appellent <code>toggleFavori(id)</code> qui met à jour à la fois la liste des annonces et la liste des favoris.
+      </li>
+      <li>
+        <strong>Accessibilité :</strong> Chaque image possède un attribut <code>alt</code>, le conteneur des annonces utilise <code>aria-live="polite"</code> pour signaler les changements aux lecteurs d’écran, et le site est navigable au clavier.
+      </li>
+    </ol>
+  </section>
+
+</main>
+
+<footer>
+  <p>&copy; Projet CCP1</p>
+</footer>
+
+<script>
+/* === DONNEES JSON DES ANNONCES === */
+const annonces = [
+  {id:1,titre:"Vélo électrique", prix:1200, categorie:"Sport", image:"https://via.placeholder.com/640x360", date:"2025-09-08"},
+  {id:2,titre:"PC portable", prix:950, categorie:"Informatique", image:"https://via.placeholder.com/640x360", date:"2025-09-05"},
+  {id:3,titre:"Smartphone", prix:500, categorie:"Electronique", image:"https://via.placeholder.com/640x360", date:"2025-09-01"},
+  {id:4,titre:"Casque audio", prix:150, categorie:"Electronique", image:"https://via.placeholder.com/640x360", date:"2025-08-28"}
+];
+
+/* === FONCTIONS FAVORIS ET LOCALSTORAGE === */
+function getFavoris() {
+  return JSON.parse(localStorage.getItem('favoris')) || [];
+}
+
+function toggleFavori(id) {
+  let favs = getFavoris();
+  if(favs.includes(id)) favs = favs.filter(f=>f!==id);
+  else favs.push(id);
+  localStorage.setItem('favoris', JSON.stringify(favs));
+  renderFavorisUI();
+  renderAnnonces();
+}
+
+/* === RENDER ANNONCES === */
+function renderAnnonces() {
+  const container = document.getElementById('annoncesContainer');
+  const search = document.getElementById('search').value.toLowerCase();
+  const categorie = document.getElementById('filterCategorie').value;
+  const sort = document.getElementById('sort').value;
+
+  let filtered = [...annonces];
+
+  if(search) filtered = filtered.filter(a => a.titre.toLowerCase().includes(search));
+  if(categorie!=='all') filtered = filtered.filter(a=>a.categorie===categorie);
+
+  if(sort==='price-asc') filtered.sort((a,b)=>a.prix-b.prix);
+  if(sort==='price-desc') filtered.sort((a,b)=>b.prix-a.prix);
+  if(sort==='date-desc') filtered.sort((a,b)=>new Date(b.date)-new Date(a.date));
+
+  const favs = getFavoris();
+  container.innerHTML = filtered.map(a=>`
+    <div class="carte">
+      <img src="${a.image}" alt="${a.titre}">
+      <h3>${a.titre}</h3>
+      <p>${a.categorie} • ${a.date}</p>
+      <p>${a.prix} €</p>
+      <button onclick="toggleFavori(${a.id})">
+        ${favs.includes(a.id) ? 'Retirer des favoris' : 'Ajouter aux favoris'}
+      </button>
+    </div>
+  `).join('');
+}
+
+/* === RENDER FAVORIS === */
+function renderFavorisUI() {
+  const container = document.getElementById('favorisList');
+  const favs = getFavoris();
+  if(favs.length===0){
+    container.innerHTML='<p>Aucun favori pour l’instant.</p>';
+    return;
+  }
+  const items = annonces.filter(a=>favs.includes(a.id));
+  container.innerHTML = items.map(a=>`
+    <div class="favori-item">
+      <img src="${a.image}" alt="${a.titre}">
+      <div style="flex:1;">
+        <strong>${a.titre}</strong><br>
+        <small>${a.categorie} • ${a.date}</small>
+      </div>
+      <button onclick="toggleFavori(${a.id})">Supprimer</button>
+    </div>
+  `).join('');
+}
+
+/* === INITIALISATION === */
+function initUI() {
+  // Remplir les catégories
+  const categories = [...new Set(annonces.map(a=>a.categorie))];
+  const select = document.getElementById('filterCategorie');
+  categories.forEach(c=>{
+    const opt = document.createElement('option');
+    opt.value=c;
+    opt.textContent=c;
+    select.appendChild(opt);
+  });
+
+  renderAnnonces();
+  renderFavorisUI();
+
+  // Listeners
+  document.getElementById('search').addEventListener('input', renderAnnonces);
+  document.getElementById('filterCategorie').addEventListener('change', renderAnnonces);
+  document.getElementById('sort').addEventListener('change', renderAnnonces);
+}
+
+// Lancer l'initialisation
+document.addEventListener('DOMContentLoaded', initUI);
+</script>
+
+</body>
+</html>
